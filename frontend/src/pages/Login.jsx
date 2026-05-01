@@ -136,7 +136,6 @@ export default function Login() {
 
             {isAdmin && (
               <p className="text-center text-xs text-slate-600 mt-2">
-                Default: admin@datalens.edu · admin@123
               </p>
             )}
           </motion.form>
