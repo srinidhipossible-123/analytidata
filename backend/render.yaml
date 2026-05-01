@@ -2,16 +2,17 @@ services:
   - type: web
     name: analytidata-backend
     env: python
-    region: singapore        # closest to India
+    region: singapore
     plan: free
+    pythonVersion: 3.10.13   # ✅ ADD THIS LINE
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: MONGODB_URL
-        sync: false          # set manually in Render dashboard
+        sync: false
       - key: DB_NAME
         value: analytidata
       - key: SECRET_KEY
-        sync: false          # set manually in Render dashboard
+        sync: false
       - key: FRONTEND_URL
-        value: https://analytidata.vercel.app   # update after Vercel deploy
+        value: https://analytidata.vercel.app
