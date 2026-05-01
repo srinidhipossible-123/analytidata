@@ -14,9 +14,14 @@ from routers import teacher as teacher_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    await connect_db()
-    from routers.auth import seed_admin
-    await seed_admin()
+    try:
+        await connect_db()
+        from routers.auth import seed_admin
+        await seed_admin()
+        print("[OK] Startup complete.")
+    except Exception as e:
+        # Log clearly but don't crash — uvicorn will still bind the port
+        print(f"[WARN] Startup error (DB/seed): {e}", flush=True)
     yield
     await close_db()
 
@@ -27,7 +32,7 @@ app = FastAPI(title="AnalytiData — Student Analytics", version="2.0.0", lifesp
 # Build allowed origins from env vars — filter empty strings so an unset
 # FRONTEND_URL doesn't add a blank entry that breaks CORS.
 _extra_origins = [
-    o.strip()
+    o.strip().rstrip("/")
     for o in os.getenv("FRONTEND_URL", "").split(",")
     if o.strip()
 ]
