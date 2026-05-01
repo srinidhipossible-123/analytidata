@@ -14,3 +14,4 @@ python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
 aiofiles==23.2.1
 matplotlib>=3.7.0
+plotly==5.22.0
