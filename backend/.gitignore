@@ -1,0 +1,32 @@
+# Environment files — NEVER commit these
+.env
+.env.local
+.env.*
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Uploaded files
+uploads/
+
+# Test outputs
+test_output.pdf
+test_pdf.py
+test_analytics.py
+
+# Editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --scrollbar-thumb: #3b82f6;
+    --scrollbar-track: #0f172a;
+  }
+
+  * { box-sizing: border-box; }
+
+  /* Remove number input spinners */
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  input[type=number] { -moz-appearance: textfield; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    @apply bg-navy-900 text-slate-100 font-sans antialiased;
+    background-image:
+      radial-gradient(ellipse at 20% 20%, rgba(59,130,246,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(139,92,246,0.06) 0%, transparent 60%);
+  }
+
+  .dark body { @apply bg-navy-900; }
+  .light body { @apply bg-slate-50 text-slate-900; }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+  ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 3px; }
+}
+
+@layer components {
+  /* Glassmorphism card */
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl;
+  }
+  .glass-light {
+    @apply bg-white/80 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-xl;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-blue-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent;
+  }
+
+  /* Glow effects */
+  .glow-blue   { box-shadow: 0 0 20px rgba(59,130,246,0.3), 0 0 60px rgba(59,130,246,0.1); }
+  .glow-violet { box-shadow: 0 0 20px rgba(139,92,246,0.3), 0 0 60px rgba(139,92,246,0.1); }
+
+  /* Stat card */
+  .stat-card {
+    @apply glass p-5 rounded-2xl transition-all duration-300 hover:border-blue-500/30 hover:glow-blue;
+  }
+
+  /* Button variants */
+  .btn-primary {
+    @apply bg-gradient-to-r from-blue-500 to-violet-600 text-white font-semibold px-6 py-2.5
+           rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-blue-500/50
+           hover:scale-[1.02] active:scale-[0.98] transition-all duration-200;
+  }
+  .btn-secondary {
+    @apply glass text-slate-300 font-medium px-6 py-2.5 rounded-xl
+           hover:bg-white/10 hover:text-white transition-all duration-200;
+  }
+  .btn-danger {
+    @apply bg-red-500/10 border border-red-500/30 text-red-400 font-medium px-4 py-2
+           rounded-xl hover:bg-red-500/20 transition-all duration-200;
+  }
+
+  /* Input */
+  .input-glass {
+    @apply glass bg-white/5 text-slate-100 placeholder-slate-500 px-4 py-2.5 rounded-xl
+           focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50
+           transition-all duration-200 w-full;
+  }
+
+  /* Tag badge */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  .badge-blue   { @apply badge bg-blue-500/20 text-blue-300; }
+  .badge-violet { @apply badge bg-violet-500/20 text-violet-300; }
+  .badge-green  { @apply badge bg-emerald-500/20 text-emerald-300; }
+  .badge-yellow { @apply badge bg-amber-500/20 text-amber-300; }
+  .badge-red    { @apply badge bg-red-500/20 text-red-300; }
+  .badge-pink   { @apply badge bg-pink-500/20 text-pink-300; }
+  .badge-orange { @apply badge bg-orange-500/20 text-orange-300; }
+  .badge-cyan   { @apply badge bg-cyan-500/20 text-cyan-300; }
+}
+
+/* Animated gradient orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  animation: float 8s ease-in-out infinite;
+  pointer-events: none;
+}
+.orb-blue   { background: radial-gradient(circle, #3b82f6, transparent); }
+.orb-violet { background: radial-gradient(circle, #8b5cf6, transparent); animation-delay: -3s; }
+.orb-cyan   { background: radial-gradient(circle, #06b6d4, transparent); animation-delay: -6s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%       { transform: translateY(-30px) scale(1.05); }
+}
+
+/* Shimmer loading skeleton */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0.04) 25%,
+    rgba(255,255,255,0.10) 50%,
+    rgba(255,255,255,0.04) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+/* Page transition */
+.page-enter  { opacity: 0; transform: translateY(16px); }
+.page-active { opacity: 1; transform: translateY(0);    transition: all 0.35s ease; }
+
+/* Print styles for Student Card */
+@media print {
+  body { background: white !important; color: #1e293b !important; }
+  aside, .print\:hidden { display: none !important; }
+  main { margin-left: 0 !important; }
+  .glass {
+    background: white !important;
+    border: 1px solid #e2e8f0 !important;
+    backdrop-filter: none !important;
+  }
+  .gradient-text {
+    background: none !important;
+    -webkit-text-fill-color: #1e293b !important;
+    color: #1e293b !important;
+  }
+}
